@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
-const {execute} = require('./lib/exec');
+const {execute, killAllprocesses} = require('./lib/exec');
 
 const config = require('./config');
 const [,, ...args] = process.argv;
 const [cmd, ...params] = args;
 
+cleanupOnExit();
 
 const simple = config.simple[cmd];
 if(simple)
@@ -18,3 +19,13 @@ if (fs.existsSync(cmdPath)) {
 }
 
 console.log(`Invalid command '${cmd}'`);
+
+function cleanup() {
+  killAllprocesses();
+}
+
+function cleanupOnExit() {
+  process.on('exit', cleanup);
+  process.on('SIGINT', cleanup);
+  process.on('uncaughtException', cleanup);
+}
