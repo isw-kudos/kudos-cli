@@ -1,7 +1,9 @@
 const SERVICE = type => `kudos-${type}-service`;
 const WEB = type => `kudos-${type}-webfront`;
+
 const START = 'kudos dev';
 const UPDEPS = 'kudos updeps';
+const WEBSTART = 'npm run start';
 
 module.exports = {
   simple: {
@@ -28,7 +30,7 @@ module.exports = {
     nodemon: port => `node_modules/.bin/nodemon -w src --exec babel-node --inspect=${port} src`,
     shared: () => `node_modules/.bin/concurrently -p name -n USER,PROV,NOTF,LIC -c white.bgGreen,white.bgMagenta,black.bgCyan,black.bgWhite --kill-others "${START} user" "${START} provider" "${START} notification" "${START} licence"`,
     all: () => `node_modules/.bin/concurrently -p name -n CORE,APP,WEB,USER,PROV,NOTF,LIC -c white.bgRed,white.bgBlue,white.bgYellow,white.bgGreen,white.bgMagenta,black.bgCyan,black.bgWhite --kill-others "${START}" "${START} app" "${START} web" "${START} user" "${START} provider" "${START} notification" "${START} licence"`,
-    dir: (dirName) => `cd ${dirName} && ${START}`,
+    dir: (dirName, web) => `cd ${dirName} && ${web ? WEBSTART : START}`,
   },
   START,
   UPDEPS,

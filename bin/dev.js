@@ -20,7 +20,8 @@ function getCommand(type, app) {
   
   app = detectApp(app);
   const dirName = getDirName(type, app);
-  return Promise.resolve(dirName && config.start.dir(dirName));
+  const isWeb = type==='web';
+  return Promise.resolve(dirName && config.start.dir(dirName, isWeb));
 }
 
 function detectApp(app) {
