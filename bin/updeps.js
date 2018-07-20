@@ -41,7 +41,7 @@ function checkForUpdates(deps, name = '') {
 function processUpdates(updates) {
   return executeInSeries(updates.map(
     ({url, commit}) => npmInstallCmd(url, commit)
-  ));
+  ), false, true);
 }
 
 function logResults([success, total]) {

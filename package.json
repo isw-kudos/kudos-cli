@@ -9,8 +9,5 @@
   "main": "index.js",
   "bin": {
     "kudos": "index.js"
-  },
-  "dependencies": {
-    "detect-port": "^1.2.3"
   }
 }

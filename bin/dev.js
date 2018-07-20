@@ -1,5 +1,4 @@
 const {execute} = require('../lib/exec');
-const detect = require('detect-port');
 const path = require('path');
 
 const config = require('../config');
@@ -26,15 +25,17 @@ function getCommand(type, app) {
 
 function detectApp(app) {
   if(app) return app;
-  const dirName = path.basename(process.cwd());
-  return config.apps[dirName];
+  return config.apps[getCurrentDir()];
+}
+
+function getCurrentDir() {
+  return path.basename(process.cwd());
 }
 
 function getPort() {
-  const port = 9220;
-  return new Promise((resolve, reject) => {
-    detect(port, (err, _port) => err ? reject(err) : resolve(_port));
-  });
+  const strippedDir = getCurrentDir().replace(/(service|-|webfront|kudos)/g, '');
+  const port = config.ports[strippedDir] || config.ports.any;
+  return Promise.resolve(port);
 }
 
 function getDirName(type, app) {
