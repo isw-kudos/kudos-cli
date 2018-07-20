@@ -10,7 +10,7 @@ const simple = config.simple[cmd];
 if(simple)
   return require('./lib/exec').execute(simple).catch(() => {});
 
-const cmdPath = path.resolve(`./bin/${cmd}.js`);
+const cmdPath = path.relative(__dirname, `./bin/${cmd}.js`);
 if (fs.existsSync(cmdPath)) {
   return require(cmdPath)(params);
 }
