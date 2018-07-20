@@ -6,9 +6,11 @@ const version = require('../package.json').version;
 module.exports = () => {
   console.log(`
 kudos-cli v${version}
-Available commands:
-
-${getCommands().join('\n')}
+---------------------------
+# Available commands:
+---------------------------
+${getCommands().map(c => getHelpStr(c)).join('\n')}
+---------------------------
   `);
 };
 
@@ -17,4 +19,9 @@ function getCommands() {
   .concat(Object.keys(config.simple))
   .concat(fs.readdirSync(path.resolve(__dirname, './')).map(file => path.basename(file, '.js')))
   .sort();
+}
+
+function getHelpStr(cmd) {
+  let help = config.help[cmd];
+  return help ? `${cmd} - ${help}` : cmd;
 }

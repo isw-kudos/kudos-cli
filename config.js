@@ -10,7 +10,16 @@ module.exports = {
     pull: 'kudos pckglck && git submodule foreach git pull origin master && git pull origin master',
     npm: 'git submodule foreach npm i && npm i',
     pckglck: 'git submodule foreach git checkout package-lock.json && git checkout package-lock.json',
-    pullr: 'kudos pull && kudos npm',
+    catchup: 'kudos pull && kudos npm',
+  },
+  help: {
+    pull: 'Pull latest changes for all submodules supressing package-lock conflicts',
+    npm: 'Run npm install for each submodule and for current dir',
+    pckglck: 'Revert package-lock changes for all submodules and current dir',
+    catchup: 'Pull latest changes for all submodules and run npm install on all submodules.',
+    deps: 'Build exports and common repos into deps? TODO',
+    dev: `Run current app, all submodules or specific submodule. Supported params: <none>, all, web, app, user, licence, nofitication, provider`,
+    updeps: 'Update git based repos to latest commits. Run with param all to run for all submodules.'
   },
   apps: {
     'kudos-boards-core': 'boards',
