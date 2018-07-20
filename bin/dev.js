@@ -5,7 +5,7 @@ const config = require('../config');
 
 module.exports = (params) => {
   let [type = '', app] = params;
-  
+  ensureCorrectPath();
   return getCommand(type, app)
   .then(cmd => cmd ? execute(cmd) : console.log(`Invalid start params '${params}'`))
   .catch(() => {});
@@ -40,4 +40,9 @@ function getPort() {
 
 function getDirName(type, app) {
   return config.dirs[type] || config.dirs[type+'-'+app];
+}
+
+function ensureCorrectPath() {
+  if(process.env.PATH.indexOf('node_modules')>-1) return;
+  process.env.PATH += ':node_modules/.bin/';
 }
