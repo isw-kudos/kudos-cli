@@ -8,7 +8,7 @@ module.exports = {
     pull: 'kudos pckglck && git submodule foreach git pull origin master && git pull origin master',
     npm: 'git submodule foreach npm i && npm i',
     pckglck: 'git submodule foreach git checkout package-lock.json && git checkout package-lock.json',
-    pullr: 'kudos pull && kudos npmi && kudos deps',
+    pullr: 'kudos pull && kudos npm',
   },
   apps: {
     'kudos-boards-core': 'boards',
