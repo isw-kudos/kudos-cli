@@ -27,7 +27,7 @@ module.exports = {
     'web-ideas': WEB('innovation'),
   },
   start: {
-    nodemon: port => `node_modules/.bin/nodemon -w src --exec babel-node --inspect=${port} src`,
+    nodemon: port => `node_modules/.bin/nodemon -w src --exec node_modules/.bin/babel-node --inspect=${port} src`,
     shared: () => `node_modules/.bin/concurrently -p name -n USER,PROV,NOTF,LIC -c white.bgGreen,white.bgMagenta,black.bgCyan,black.bgWhite --kill-others "${START} user" "${START} provider" "${START} notification" "${START} licence"`,
     all: () => `node_modules/.bin/concurrently -p name -n CORE,APP,WEB,USER,PROV,NOTF,LIC -c white.bgRed,white.bgBlue,white.bgYellow,white.bgGreen,white.bgMagenta,black.bgCyan,black.bgWhite --kill-others "${START}" "${START} app" "${START} web" "${START} user" "${START} provider" "${START} notification" "${START} licence"`,
     dir: (dirName, web) => `cd ${dirName} && ${web ? WEBSTART : START}`,
