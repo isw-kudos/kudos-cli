@@ -15,6 +15,6 @@ ${getCommands().join('\n')}
 function getCommands() {
   return []
   .concat(Object.keys(config.simple))
-  .concat(fs.readdirSync(path.relative(__dirname, './')).map(file => path.basename(file, '.js')))
+  .concat(fs.readdirSync(path.resolve(__dirname, './')).map(file => path.basename(file, '.js')))
   .sort();
 }
