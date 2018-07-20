@@ -1,0 +1,16 @@
+{
+  "name": "kudos-cli",
+  "version": "1.0.0",
+  "author": "ISW",
+  "description": "CLI for kudos microservices",
+  "repository": "git@github.com:isw-kudos/kudos-cli.git",
+  "license": "Private",
+  "private": true,
+  "main": "index.js",
+  "bin": {
+    "kudos": "index.js"
+  },
+  "dependencies": {
+    "detect-port": "^1.2.3"
+  }
+}
