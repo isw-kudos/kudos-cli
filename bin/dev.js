@@ -6,21 +6,20 @@ const config = require('../config');
 module.exports = (params) => {
   let [type = '', app] = params;
   ensureCorrectPath();
-  return getCommand(type, app)
-  .then(cmd => cmd ? execute(cmd) : console.log(`Invalid start params '${params}'`))
-  .catch(() => {});
+  const cmd = getCommand(type, app);
+  return cmd ? execute(cmd).catch(() => {}) : console.log(`Invalid start params '${params}'`)
 };
 
 function getCommand(type, app) {
   type = type || 'nodemon';
   
   const cmd = config.start[type];
-  if(cmd) return getPort().then(cmd);
+  if(cmd) return cmd(getPort());
   
   app = detectApp(app);
   const dirName = getDirName(type, app);
   const isWeb = type==='web';
-  return Promise.resolve(dirName && config.start.dir(dirName, isWeb));
+  return dirName && config.start.dir(dirName, isWeb);
 }
 
 function detectApp(app) {
@@ -35,7 +34,7 @@ function getCurrentDir() {
 function getPort() {
   const strippedDir = getCurrentDir().replace(/(service|-|webfront|kudos)/g, '');
   const port = config.ports[strippedDir] || config.ports.any;
-  return Promise.resolve(port);
+  return port;
 }
 
 function getDirName(type, app) {
