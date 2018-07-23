@@ -9,5 +9,9 @@
   "main": "index.js",
   "bin": {
     "kudos": "index.js"
+  },
+  "dependencies": {
+    "concurrently": "^3.6.0",
+    "nodemon": "^1.18.3"
   }
 }
