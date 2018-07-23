@@ -34,5 +34,8 @@ function cleanup() {
 function cleanupOnExit() {
   process.on('exit', cleanup);
   process.on('SIGINT', cleanup);
+  // catches "kill pid" (for example: nodemon restart)
+  process.on('SIGUSR1', cleanup);
+  process.on('SIGUSR2', cleanup);
   process.on('uncaughtException', cleanup);
 }
