@@ -3,8 +3,8 @@ const {executeInSeries} = require('../lib/exec');
 const path = require('path');
 
 module.exports = () => {
-  const pckg = require(path.resolve('package.json'));
-  return migrateGitDeps(pckg.dependencies)
+  const pkg = require(path.resolve('package.json'));
+  return migrateGitDeps(pkg.dependencies)
   .then(([success, total]) => total && (total!==success ? console.log(`Error migrating!`) :
     console.log(`
 Successfully migrated ${total/2} packages!

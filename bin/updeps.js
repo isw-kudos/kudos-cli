@@ -9,8 +9,8 @@ module.exports = (params) => {
   if(param==='all')
     return execute(`git submodule foreach ${config.UPDEPS} && ${config.UPDEPS}`);
   
-  const pckg = require(path.resolve('package.json'));
-  return checkForUpdates(pckg.dependencies, pckg.name).then(processUpdates).then(logResults)
+  const pkg = require(path.resolve('package.json'));
+  return checkForUpdates(pkg.dependencies, pkg.name).then(processUpdates).then(logResults)
 };
 
 
@@ -47,8 +47,8 @@ function processUpdates(updates) {
 function logResults([success, total]) {
   if(total) {
     const fail = total - success;
-    if(fail) console.log(`Failed to update ${fail} pckg(s)`);
-    if(success) console.log(`Updated ${success} pckg(s)\nPlease commit package.json`);
+    if(fail) console.log(`Failed to update ${fail} pkg(s)`);
+    if(success) console.log(`Updated ${success} pkg(s)\nPlease commit package.json`);
   } else console.log('All git deps up to date');
   console.log('\n');
 }

@@ -1,9 +1,9 @@
 {
   "name": "kudos-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "ISW",
-  "description": "CLI for kudos microservices",
-  "repository": "git@github.com:isw-kudos/kudos-cli.git",
+  "description": "CLI utility for kudos microservices",
+  "repository": "https://github.com/isw-kudos/kudos-cli.git",
   "license": "Private",
   "private": true,
   "main": "index.js",
@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "concurrently": "^3.6.0",
-    "nodemon": "^1.18.3"
+    "nodemon": "^1.18.3",
+    "update-notifier": "^2.5.0"
   }
 }

@@ -1,13 +1,15 @@
 const config = require('../config');
 const path = require('path');
 const fs = require('fs');
-const version = require('../package.json').version;
+const {version, description} = require('../package.json');
 
 module.exports = () => {
   console.log(`
-kudos-cli v${version}
+kudos-cli v${version} - ${description}
+
+Usage: kudos <command>
 ---------------------------
-# Available commands:
+Where <command> is one of:
 ---------------------------
 ${getCommands().map(c => getHelpStr(c)).join('\n')}
 ---------------------------

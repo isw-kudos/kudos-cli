@@ -2,23 +2,30 @@
 const fs = require('fs');
 const path = require('path');
 const {execute, killAllprocesses} = require('./lib/exec');
-
 const config = require('./config');
 const [,, ...args] = process.argv;
 const [cmd, ...params] = args;
 
-cleanupOnExit();
+const pkg = require('./package.json');
+const updateNotifier = require('update-notifier');
+updateNotifier({pkg}).notify();
+return init();
 
-const simple = config.simple[cmd];
-if(simple)
-  return execute(simple).catch(() => {});
-
-const cmdPath = path.resolve(__dirname, `./bin/${cmd}.js`);
-if (fs.existsSync(cmdPath)) {
-  return require(cmdPath)(params);
+function init() {
+  cleanupOnExit();
+  const simple = config.simple[cmd];
+  if(simple) return execute(simple).catch(() => {});
+  return require(getCmdPath(cmd))(params);
 }
 
-console.log(`Invalid command '${cmd}'`);
+function getCmdPath(cmd) {
+  let cmdPath = path.resolve(__dirname, `./bin/${cmd}.js`);
+  if (!fs.existsSync(cmdPath)) {
+    console.log(`Invalid command '${cmd}'`);
+    cmdPath = path.resolve(__dirname, `./bin/help.js`);
+  }
+  return cmdPath;
+}
 
 function cleanup() {
   killAllprocesses();
