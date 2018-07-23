@@ -2,24 +2,30 @@ const {execute} = require('../lib/exec');
 const path = require('path');
 
 const config = require('../config');
+const fkill = require('fkill');
+const detect = require('detect-port');
+
 
 module.exports = (params) => {
   let [type = '', app] = params;
   ensureCorrectPath();
-  const cmd = getCommand(type, app);
-  return cmd ? execute(cmd).catch(() => {}) : console.log(`Invalid start params '${params}'`)
+  return getCommand(type, app)
+    .then(cmd => cmd ? execute(cmd).catch(() => {}) : console.log(`Invalid start params '${params}'`));
 };
 
 function getCommand(type, app) {
   type = type || 'nodemon';
   
   const cmd = config.start[type];
-  if(cmd) return cmd(getPort());
+  if(cmd) {
+    if(typeof cmd==='function') return getPort().then(cmd);
+    return Promise.resolve(cmd)
+  }
   
   app = detectApp(app);
   const dirName = getDirName(type, app);
   const isWeb = type==='web';
-  return dirName && config.start.dir(dirName, isWeb);
+  return Promise.resolve(dirName && config.start._dir(dirName, isWeb));
 }
 
 function detectApp(app) {
@@ -33,8 +39,10 @@ function getCurrentDir() {
 
 function getPort() {
   const strippedDir = getCurrentDir().replace(/(service|-|webfront|kudos)/g, '');
-  const port = config.ports[strippedDir] || config.ports.any;
-  return port;
+  const port = config.ports[strippedDir] || (config.ports.any + Math.floor(Math.random() * 9));
+  return detect(port)
+    .then(_port => _port!==port ? fkill(':'+port) : Promise.resolve())
+    .then(() => port);
 }
 
 function getDirName(type, app) {
@@ -42,5 +50,5 @@ function getDirName(type, app) {
 }
 
 function ensureCorrectPath() {
-  process.env.PATH += ':'+ path.resolve(__dirname, '../node_modules/.bin/');
+  process.env.PATH += path.delimiter + path.resolve(__dirname, '../node_modules/.bin/');
 }
