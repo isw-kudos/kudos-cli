@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
-const {execute, killAllprocesses} = require('./lib/exec');
+const { execute, killAllprocesses } = require('./lib/exec');
 const config = require('./config');
-const [,, ...args] = process.argv;
+const [, , ...args] = process.argv;
 const [cmd, ...params] = args;
 
 const pkg = require('./package.json');
 const updateNotifier = require('update-notifier');
-updateNotifier({pkg}).notify();
+updateNotifier({ pkg }).notify();
 return init();
 
 function init() {
   cleanupOnExit();
   const simple = config.simple[cmd];
-  if(simple) return execute(simple).catch(() => {});
+  if (simple) return execute(simple).catch(() => null);
   return require(getCmdPath(cmd))(params);
 }
 
