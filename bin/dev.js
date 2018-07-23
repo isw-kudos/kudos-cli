@@ -43,5 +43,5 @@ function getDirName(type, app) {
 
 function ensureCorrectPath() {
   if(process.env.PATH.indexOf('node_modules')>-1) return;
-  process.env.PATH += ':node_modules/.bin/';
+  process.env.PATH += ':'+ path.resolve(__dirname, '../node_modules/.bin/');
 }
