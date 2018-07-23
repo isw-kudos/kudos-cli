@@ -1,9 +1,9 @@
 {
   "name": "kudos-cli",
   "version": "1.0.1",
-  "author": "ISW",
+  "author": "ISW (jagrawal)",
   "description": "CLI utility for kudos microservices",
-  "repository": "https://github.com/isw-kudos/kudos-cli.git",
+  "repository": "git@github.com:isw-kudos/kudos-cli.git",
   "license": "Private",
   "private": true,
   "main": "index.js",
@@ -11,6 +11,7 @@
     "kudos": "index.js"
   },
   "dependencies": {
+    "babel-cli": "^6.26.0",
     "concurrently": "^3.6.0",
     "detect-port": "^1.2.3",
     "fkill": "^5.3.0",
