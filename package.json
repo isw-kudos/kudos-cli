@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "author": "ISW (jagrawal)",
   "description": "CLI utility for kudos microservices",
-  "repository": "git@github.com:isw-kudos/kudos-cli.git",
+  "repository": "isw-kudos/kudos-cli",
   "license": "MIT",
   "engine": {
     "node": ">=10.6.0"
