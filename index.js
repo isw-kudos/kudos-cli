@@ -9,7 +9,7 @@ const [cmd, ...params] = args;
 const pkg = require('./package.json');
 const updateNotifier = require('update-notifier');
 
-updateNotifier({ pkg }).notify();
+updateNotifier({ pkg, updateCheckInterval: 0 }).notify();
 
 return init();
 
