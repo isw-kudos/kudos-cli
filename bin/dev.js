@@ -57,7 +57,7 @@ function getPort(dir) {
   return Promise.all(
     ports.map(port =>
       detect(port)
-        .then(free => free !== port && fkill(':' + port))
+        .then(free => (free !== port ? fkill(':' + port) : null))
         .then(() => port)
     )
   ).then(([port]) => port);

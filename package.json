@@ -1,6 +1,6 @@
 {
   "name": "kudos-cli",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "ISW (jagrawal)",
   "description": "CLI utility for kudos microservices",
   "repository": "isw-kudos/kudos-cli",
