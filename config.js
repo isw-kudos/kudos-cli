@@ -40,7 +40,8 @@ module.exports = {
     'web-ideas': WEB('innovation'),
   },
   start: {
-    nodemon: port => `nodemon -w src --exec babel-node --inspect=${port} src`,
+    nodemon: port =>
+      `nodemon -w src --exec babel-node --inspect=${port} src --delay 1`,
     webfront: 'npm run start',
     shared: `concurrently -p name -n USER,PROV,NOTF,LIC -c white.bgGreen,white.bgMagenta,black.bgCyan,black.bgWhite --kill-others "${START} user" "${START} provider" "${START} notification" "${START} licence" --color always`,
     all: `concurrently -p name -n CORE,APP,WEB,USER,PROV,NOTF,LIC -c white.bgRed,white.bgBlue,white.bgYellow,white.bgGreen,white.bgMagenta,black.bgCyan,black.bgWhite --kill-others "${START}" "${START} app" "${START} web" "${START} user" "${START} provider" "${START} notification" "${START} licence" --color always`,
