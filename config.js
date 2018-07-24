@@ -3,7 +3,6 @@ const WEB = type => `kudos-${type}-webfront`;
 
 const START = 'kudos dev';
 const UPDEPS = 'kudos updeps';
-const WEBSTART = 'npm run start';
 
 module.exports = {
   simple: {
@@ -42,19 +41,23 @@ module.exports = {
   },
   start: {
     nodemon: port => `nodemon -w src --exec babel-node --inspect=${port} src`,
+    webfront: 'npm run start',
     shared: `concurrently -p name -n USER,PROV,NOTF,LIC -c white.bgGreen,white.bgMagenta,black.bgCyan,black.bgWhite --kill-others "${START} user" "${START} provider" "${START} notification" "${START} licence" --color always`,
     all: `concurrently -p name -n CORE,APP,WEB,USER,PROV,NOTF,LIC -c white.bgRed,white.bgBlue,white.bgYellow,white.bgGreen,white.bgMagenta,black.bgCyan,black.bgWhite --kill-others "${START}" "${START} app" "${START} web" "${START} user" "${START} provider" "${START} notification" "${START} licence" --color always`,
-    _dir: (dirName, web) => `cd ${dirName} && ${web ? WEBSTART : START}`,
+    _dir: dir => `cd ${dir} && ${START}`,
   },
   ports: {
-    user: 9220,
-    licence: 9221,
-    notification: 9222,
-    provider: 9223,
-    boards: 9224,
-    innovationidea: 9225,
-    boardscore: 9226,
-    any: 9227,
+    user: [9220],
+    licence: [9221],
+    notification: [9222],
+    provider: [9223],
+    boards: [9224],
+    innovationidea: [9225],
+    boardswebfront: [3000],
+    innovationwebfront: [3000],
+    boardscore: [9226, 3001],
+    innovationcore: [9227, 3001],
+    any: [9228],
   },
   START,
   UPDEPS,

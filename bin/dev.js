@@ -17,18 +17,17 @@ module.exports = params => {
 };
 
 function getCommand(type, app) {
-  type = type || 'nodemon';
-
+  type = detectType(type);
   const cmd = config.start[type];
   if (cmd) {
-    if (typeof cmd === 'function') return getPort().then(cmd);
-    return Promise.resolve(cmd);
+    return getPort().then(
+      port => (typeof cmd === 'function' ? cmd(port) : cmd)
+    );
   }
 
   app = detectApp(app);
   const dirName = getDirName(type, app);
-  const isWeb = type === 'web';
-  return Promise.resolve(dirName && config.start._dir(dirName, isWeb));
+  return Promise.resolve(dirName && config.start._dir(dirName));
 }
 
 function detectApp(app) {
@@ -36,21 +35,32 @@ function detectApp(app) {
   return config.apps[getCurrentDir()];
 }
 
+function detectType(type) {
+  if (type) return type;
+  if (getCurrentDir().indexOf('webfront') > -1) return 'webfront';
+  return 'nodemon';
+}
+
 function getCurrentDir() {
   return path.basename(process.cwd());
 }
 
-function getPort() {
-  const strippedDir = getCurrentDir().replace(
-    /(service|-|webfront|kudos)/g,
+function getPort(dir) {
+  const strippedDir = (dir || getCurrentDir()).replace(
+    /(service|-|kudos)/g,
     ''
   );
-  const port =
+  const ports =
     config.ports[strippedDir] ||
     config.ports.any + Math.floor(Math.random() * 9);
-  return detect(port)
-    .then(_port => (_port !== port ? fkill(':' + port) : Promise.resolve()))
-    .then(() => port);
+
+  return Promise.all(
+    ports.map(port =>
+      detect(port)
+        .then(free => free !== port && fkill(':' + port))
+        .then(() => port)
+    )
+  ).then(([port]) => port);
 }
 
 function getDirName(type, app) {
