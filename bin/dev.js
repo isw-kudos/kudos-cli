@@ -50,9 +50,9 @@ function getPort(dir) {
     /(service|-|kudos)/g,
     ''
   );
-  const ports =
-    config.ports[strippedDir] ||
-    config.ports.any + Math.floor(Math.random() * 9);
+  const ports = config.ports[strippedDir] || [];
+  if (!ports.length)
+    ports[0] = config.ports.any + Math.floor(Math.random() * 9);
 
   return Promise.all(
     ports.map(port =>
