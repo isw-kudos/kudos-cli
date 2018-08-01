@@ -67,6 +67,7 @@ module.exports = {
     client: [3000],
     any: 9228,
   },
+  webKeywords: ['webfront', 'client'],
   START,
   UPDEPS,
 };

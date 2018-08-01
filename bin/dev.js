@@ -37,7 +37,9 @@ function detectApp(app) {
 
 function detectType(type) {
   if (type) return type;
-  if (getCurrentDir().indexOf('webfront') > -1) return 'webfront';
+  const currentDir = getCurrentDir();
+  const isWeb = config.webKeywords.filter(k => currentDir.indexOf(k) > -1);
+  if (isWeb.length) return 'webfront';
   return 'nodemon';
 }
 
