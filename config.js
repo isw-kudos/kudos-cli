@@ -6,8 +6,7 @@ const UPDEPS = 'kudos updeps';
 
 module.exports = {
   simple: {
-    pull:
-      'kudos pkglck && git submodule foreach git pull origin master && git pull origin master',
+    pull: 'kudos pkglck && git submodule foreach git pull && git pull',
     npm: 'git submodule foreach npm i && npm i',
     pkglck:
       'git submodule foreach git checkout package-lock.json && git checkout package-lock.json',
