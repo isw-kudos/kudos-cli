@@ -2,6 +2,10 @@
 
 Command line utility for running Kudos microservices
 
+## v2 breaking change
+
+now uses `yarn add` for updeps
+
 ## HOW TO DEV
 1. Do some reading on NodeJS command line development. Try this: https://medium.com/netscape/a-guide-to-create-a-nodejs-command-line-package-c2166ad0452e
 
